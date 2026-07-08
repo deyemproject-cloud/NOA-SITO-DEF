@@ -439,7 +439,7 @@
     const bg = document.getElementById('heroBg');
     const petalSvg = c => `<svg viewBox="0 0 24 24"><path fill="${c}" d="M12 2C8 8 6 12 12 22 18 12 16 8 12 2z" opacity=".55"/></svg>`;
     const colors = ['#E5AEB8', '#F6D6DA', '#C98E9B', '#C9A57C'];
-    for (let k = 0; k < 9; k++) {
+    for (let k = 0; k < 22; k++) {
       const p = document.createElement('div');
       p.className = 'petal';
       p.innerHTML = petalSvg(colors[k % colors.length]);
