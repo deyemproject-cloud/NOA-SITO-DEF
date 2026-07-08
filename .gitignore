@@ -1,0 +1,7 @@
+# Strumenti locali
+.claude/
+.playwright-mcp/
+
+# Sistema
+Thumbs.db
+.DS_Store
