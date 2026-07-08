@@ -790,7 +790,10 @@ footer.site{
 .cat-nav{
   position:sticky; top:88px; z-index:60;
   padding:6px 0;
+  transition:top .45s var(--ease-out);
 }
+/* quando l'isola si nasconde allo scroll, la barra sale al suo posto */
+.cat-nav.raised{ top:14px; }
 .cat-nav .rail{
   display:flex; gap:6px; overflow-x:auto;
   width:min(var(--container), calc(100% - 48px)); margin-inline:auto;

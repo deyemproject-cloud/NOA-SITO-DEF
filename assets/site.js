@@ -6,12 +6,18 @@
   /* ---------- Dynamic island: shrink + hide on scroll-down ---------- */
   const island = document.getElementById('island');
   if (island) {
+    // quando l'isola si nasconde, la barra categorie (se presente) sale al suo posto
+    const catNav = document.querySelector('.cat-nav');
+    const setHidden = h => {
+      island.classList.toggle('hidden-up', h);
+      if (catNav) catNav.classList.toggle('raised', h);
+    };
     let lastY = 0;
     addEventListener('scroll', () => {
       const y = scrollY;
       island.classList.toggle('shrunk', y > 60);
-      if (y > 420 && y > lastY + 6) island.classList.add('hidden-up');
-      else if (y < lastY - 4 || y < 420) island.classList.remove('hidden-up');
+      if (y > 420 && y > lastY + 6) setHidden(true);
+      else if (y < lastY - 4 || y < 420) setHidden(false);
       lastY = y;
     }, { passive: true });
   }
