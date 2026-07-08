@@ -31,10 +31,6 @@
 *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; }
 
 html{ scroll-behavior:smooth; }
-@media (prefers-reduced-motion: reduce){
-  html{ scroll-behavior:auto; }
-  *,*::before,*::after{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
-}
 
 body{
   font-family:var(--font-body);
@@ -902,4 +898,37 @@ footer.site{
   .cat-nav{ top:80px; }
   .menu-section{ scroll-margin-top:170px; }
   .listino-hero{ padding-top:150px; }
+}
+
+/* ============================================================
+   MOVIMENTO RIDOTTO — degradazione elegante, non animazioni a 0ms.
+   Opera (con risparmio batteria / Lucid mode) forza
+   prefers-reduced-motion anche quando le animazioni di sistema
+   sono attive: qui i contenuti restano sempre visibili e si
+   fermano solo le animazioni decorative.
+   NOTA: questo blocco deve restare in FONDO al foglio, così le
+   sue regole vincono sulla cascata a parità di specificità.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+
+  /* animazioni decorative continue: spente */
+  .blob, .petal, .rotor svg, .arch::after, .marquee-track,
+  .fc-1, .fc-2, .hero-tag .dot, .scroll-hint::after,
+  .arch svg.botanic path{ animation:none !important; }
+  .petal{ display:none; }
+  .arch svg.botanic path{ stroke-dashoffset:0; }
+
+  /* contenuti dell'hero: subito visibili, senza slide */
+  .hero h1 .line > span{ animation:none; transform:none; }
+  .hero .lead, .hero-cta, .hero-proof, .hero-visual, .scroll-hint{
+    animation:none; opacity:1;
+  }
+
+  /* reveal allo scroll: sempre visibili */
+  .reveal{ opacity:1; transform:none; transition:none; }
+
+  /* micro-transizioni (hover, isola): istantanee ma innocue */
+  .island, .brand img, .btn, .service, .stat, .review, .info-row,
+  .g-item, .mobile-menu{ transition:none; }
 }

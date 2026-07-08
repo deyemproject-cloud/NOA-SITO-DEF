@@ -460,6 +460,10 @@
       const target = parseFloat(el.dataset.count);
       const dec = +(el.dataset.decimal || 0);
       const suffix = el.dataset.suffix !== undefined ? el.dataset.suffix : '+';
+      if (prefersReduced) {
+        el.textContent = target.toFixed(dec).replace('.', ',') + suffix;
+        return;
+      }
       const t0 = performance.now(), dur = 1600;
       const tick = now => {
         const p = Math.min((now - t0) / dur, 1);
