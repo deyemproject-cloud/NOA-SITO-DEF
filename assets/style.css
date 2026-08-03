@@ -271,8 +271,18 @@ body::after{
   display:block; transform:translateY(110%);
   animation:rise 1.1s var(--ease-out) forwards;
 }
-.hero h1 .line:nth-child(2) > span{ animation-delay:.12s; }
-.hero h1 .line:nth-child(3) > span{ animation-delay:.24s; }
+.hero h1 .line:nth-child(3) > span{ animation-delay:.12s; }
+.hero h1 .line:nth-child(4) > span{ animation-delay:.24s; }
+
+/* riga keyword dentro l'H1: dà a Google "centro estetico … Pavia" nel titolo
+   principale senza toccare la scala tipografica delle righe display. */
+.hero h1 .h1-kw{
+  display:block; margin-bottom:14px;
+  font-family:var(--font-body); font-size:12px; font-weight:700;
+  letter-spacing:.26em; text-transform:uppercase; line-height:1.5;
+  color:var(--rosa-fondo);
+  opacity:0; animation:fadeUp .9s .1s var(--ease-out) forwards;
+}
 @keyframes rise{ to{ transform:translateY(0); } }
 
 .swap-word{
@@ -833,6 +843,14 @@ footer.site{
   margin:12px auto 0; max-width:58ch;
   font-size:15px; color:var(--prugna-soft);
 }
+/* link dal listino alla pagina servizio corrispondente */
+.menu-head .menu-sub a,
+.menu-subgroup p a{
+  color:var(--rosa-fondo); font-weight:700; text-decoration:none;
+  border-bottom:1px solid rgba(160,94,108,.35); white-space:nowrap;
+}
+.menu-head .menu-sub a:hover,
+.menu-subgroup p a:hover{ border-bottom-color:var(--rosa-fondo); }
 .menu-list{ margin-top:34px; }
 
 .menu-item{ padding:15px 4px; }
@@ -904,6 +922,192 @@ footer.site{
 }
 
 /* ============================================================
+   NAV — sottomenu "Trattamenti"
+   Solo CSS: :hover per il mouse, :focus-within per la tastiera.
+   Il margin-top del pannello resta 0, altrimenti si crea un varco
+   in cui il puntatore esce dall'area hover e il menu si chiude.
+   ============================================================ */
+.island nav .has-sub{ position:relative; display:flex; align-items:center; }
+.island nav .sub{
+  position:absolute; top:100%; left:50%; margin-top:0;
+  transform:translateX(-50%) scale(.97); transform-origin:top center;
+  opacity:0; visibility:hidden;
+  min-width:238px; padding:20px 10px 10px;
+  display:flex; flex-direction:column; gap:2px;
+  transition:opacity .28s var(--ease-out), transform .28s var(--ease-out), visibility .28s;
+}
+/* pannello vero e proprio: il padding-top sopra fa da ponte invisibile */
+.island nav .sub::before{
+  content:""; position:absolute; inset:14px 0 0;
+  border-radius:22px;
+  background:rgba(255,253,251,.94);
+  backdrop-filter:blur(24px) saturate(1.4);
+  -webkit-backdrop-filter:blur(24px) saturate(1.4);
+  border:1px solid rgba(255,255,255,.75);
+  box-shadow:0 24px 60px -22px rgba(56,42,48,.34);
+  z-index:-1;
+}
+.island nav .has-sub:hover .sub,
+.island nav .has-sub:focus-within .sub{
+  opacity:1; visibility:visible; transform:translateX(-50%) scale(1);
+}
+.island nav .sub a{
+  text-align:left; letter-spacing:.12em; padding:10px 16px;
+  border-radius:14px;
+}
+.island nav .sub a.active{ background:rgba(229,174,184,.22); }
+.island nav .sub a.active::after{ display:none; }
+
+/* menu mobile: gruppo trattamenti */
+.mobile-menu{ max-height:80vh; overflow-y:auto; }
+.mm-group{
+  display:flex; flex-direction:column; gap:2px;
+  margin:6px 0; padding:10px 0;
+  border-top:1px solid rgba(160,94,108,.14);
+  border-bottom:1px solid rgba(160,94,108,.14);
+}
+.mm-label{
+  text-align:center; padding:4px 0 8px;
+  font-size:10px; font-weight:700; letter-spacing:.3em; text-transform:uppercase;
+  color:var(--rosa-fondo);
+}
+.mm-group a{ padding:11px 18px; font-size:12px; letter-spacing:.14em; }
+
+/* ============================================================
+   BRICIOLE DI PANE
+   ============================================================ */
+.crumbs{
+  display:flex; flex-wrap:wrap; align-items:center; gap:8px;
+  margin-bottom:18px;
+  font-size:11.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+  color:var(--prugna-soft);
+}
+.crumbs a{ color:var(--rosa-fondo); transition:color .3s; }
+.crumbs a:hover{ color:var(--prugna); }
+.crumbs .sep{ color:rgba(160,94,108,.4); }
+.crumbs [aria-current]{ color:var(--prugna-soft); }
+
+/* ============================================================
+   PAGINE SERVIZIO — prosa, passaggi, staff, correlati
+   ============================================================ */
+.svc-prose{ margin-top:30px; max-width:66ch; margin-inline:auto; }
+.svc-prose p{ font-size:16px; line-height:1.75; color:var(--prugna-soft); }
+.svc-prose p + p{ margin-top:16px; }
+.svc-prose strong{ color:var(--prugna); font-weight:700; }
+
+.svc-steps{ margin-top:30px; display:grid; gap:14px; counter-reset:step; }
+.svc-step{
+  position:relative; padding:20px 24px 20px 62px;
+  border-radius:24px; background:var(--bianco);
+  border:1px solid rgba(160,94,108,.12);
+}
+.svc-step::before{
+  counter-increment:step; content:counter(step);
+  position:absolute; left:20px; top:19px;
+  width:28px; height:28px; border-radius:50%;
+  background:var(--rosa-pallido); color:var(--rosa-fondo);
+  font-family:var(--font-display); font-size:15px; font-weight:600;
+  display:flex; align-items:center; justify-content:center;
+}
+.svc-step h3{ font-family:var(--font-display); font-weight:520; font-size:19px; margin-bottom:5px; }
+.svc-step p{ font-size:14.5px; color:var(--prugna-soft); line-height:1.65; }
+
+.svc-team{ margin-top:30px; display:grid; gap:14px; }
+.svc-team .who{
+  padding:20px 24px; border-radius:24px;
+  background:var(--crema-scuro); border:1px solid rgba(160,94,108,.1);
+}
+.svc-team .who b{ font-family:var(--font-display); font-size:19px; font-weight:560; }
+.svc-team .who span{
+  display:block; margin-top:2px;
+  font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--rosa-fondo);
+}
+.svc-team .who p{ margin-top:9px; font-size:14.5px; color:var(--prugna-soft); line-height:1.65; }
+
+/* recensioni pertinenti dentro una pagina servizio (larghezza .menu-wrap) */
+.svc-reviews{ margin-top:30px; display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+@media (max-width: 780px){ .svc-reviews{ grid-template-columns:1fr; } }
+
+/* link alle pagine correlate: riusa la card .service */
+.rel-grid{
+  margin-top:30px;
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:18px;
+}
+@media (max-width: 780px){ .rel-grid{ grid-template-columns:1fr; } }
+/* la card servizio usata come link (home → pagine servizio, correlati) */
+a.service{ display:block; color:inherit; }
+a.service .arrow{
+  display:inline-flex; align-items:center; gap:7px; margin-top:16px;
+  font-size:11.5px; font-weight:700; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--rosa-fondo);
+}
+a.service .arrow svg{ width:14px; height:14px; stroke:currentColor; fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; transition:transform .35s var(--ease-out); }
+a.service:hover .arrow svg{ transform:translateX(4px); }
+a.service.featured .arrow{ color:var(--rosa); }
+
+/* ============================================================
+   FAQ — <details>/<summary>, coerenti con lo schema FAQPage
+   ============================================================ */
+.faq-list{ margin-top:30px; }
+.faq-item{
+  border-bottom:1px solid rgba(160,94,108,.14);
+}
+.faq-item summary{
+  list-style:none; cursor:pointer;
+  display:flex; align-items:flex-start; gap:16px;
+  padding:19px 4px;
+  font-family:var(--font-display); font-weight:500; font-size:19px;
+  transition:color .3s;
+}
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary::after{
+  content:"+"; margin-left:auto; flex:none;
+  font-family:var(--font-body); font-size:22px; font-weight:300; line-height:1;
+  color:var(--rosa-fondo);
+  transition:transform .35s var(--ease-out);
+}
+.faq-item[open] summary::after{ transform:rotate(45deg); }
+.faq-item summary:hover{ color:var(--rosa-fondo); }
+.faq-a{
+  padding:0 44px 22px 4px;
+  font-size:15px; line-height:1.75; color:var(--prugna-soft);
+}
+.faq-a a{ color:var(--rosa-fondo); text-decoration:underline; text-underline-offset:3px; }
+
+/* ============================================================
+   FOOTER — colonne link + comuni serviti (blocco additivo)
+   ============================================================ */
+.footer-cols{
+  display:grid; grid-template-columns:repeat(3, 1fr); gap:34px;
+  margin-bottom:44px;
+}
+.fcol{ display:flex; flex-direction:column; gap:9px; }
+.fcol h2{
+  font-size:11px; font-weight:700; letter-spacing:.24em; text-transform:uppercase;
+  color:var(--rosa); margin-bottom:5px;
+}
+.fcol a{ font-size:14px; color:rgba(251,246,241,.72); transition:color .3s; }
+.fcol a:hover{ color:var(--rosa); }
+.fnap{ font-size:14px; line-height:1.75; color:rgba(251,246,241,.72); }
+.fnap strong{ color:var(--crema); font-weight:600; }
+.fnap a{ color:rgba(251,246,241,.72); }
+.fnap a:hover{ color:var(--rosa); }
+.fnap + .fnap{ margin-top:14px; }
+.fareas{
+  margin-bottom:34px; padding-top:26px;
+  border-top:1px solid rgba(251,246,241,.14);
+  font-size:12.5px; line-height:1.7; color:rgba(251,246,241,.45);
+}
+@media (max-width: 880px){
+  .footer-cols{ grid-template-columns:1fr 1fr; gap:28px; }
+  .fcol:nth-child(3){ grid-column:1 / -1; }
+}
+@media (max-width: 520px){
+  .footer-cols{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
    MOVIMENTO RIDOTTO — degradazione elegante, non animazioni a 0ms.
    Opera (con risparmio batteria / Lucid mode) forza
    prefers-reduced-motion anche quando le animazioni di sistema
@@ -924,6 +1128,7 @@ footer.site{
 
   /* contenuti dell'hero: subito visibili, senza slide */
   .hero h1 .line > span{ animation:none; transform:none; }
+  .hero h1 .h1-kw,
   .hero .lead, .hero-cta, .hero-proof, .hero-visual, .scroll-hint{
     animation:none; opacity:1;
   }
@@ -933,5 +1138,5 @@ footer.site{
 
   /* micro-transizioni (hover, isola): istantanee ma innocue */
   .island, .brand img, .btn, .service, .stat, .review, .info-row,
-  .g-item, .mobile-menu{ transition:none; }
+  .g-item, .mobile-menu, .island nav .sub, .faq-item summary::after{ transition:none; }
 }

@@ -42,10 +42,13 @@
 
   /* ---------- Scroll-spy: link attivo (isola e nav categorie) ---------- */
   const spyLinks = [...document.querySelectorAll('[data-spy]')];
+  // i link dell'isola sono assoluti ("/#contatti") per funzionare da ogni
+  // pagina: qui togliamo lo slash iniziale per confrontarli con gli id.
+  const hashOf = a => (a.getAttribute('href') || '').replace(/^\/(?=#)/, '');
   const spySections = spyLinks
     .map(a => {
-      const href = a.getAttribute('href');
-      return href.startsWith('#') ? document.querySelector(href) : null;
+      const h = hashOf(a);
+      return h.startsWith('#') ? document.querySelector(h) : null;
     })
     .filter(Boolean);
   if (spySections.length) {
@@ -53,7 +56,7 @@
       entries.forEach(e => {
         if (!e.isIntersecting) return;
         spyLinks.forEach(a =>
-          a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+          a.classList.toggle('active', hashOf(a) === '#' + e.target.id));
       });
     }, { rootMargin: '-35% 0px -55% 0px' });
     spySections.forEach(s => spyObs.observe(s));
