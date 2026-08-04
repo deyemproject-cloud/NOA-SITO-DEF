@@ -470,25 +470,32 @@ section{ padding:110px 0; position:relative; }
 .about .container{
   display:grid; grid-template-columns:.9fr 1.1fr; gap:72px; align-items:center;
 }
-.about-visual{ position:relative; }
+/* width:100% è necessario: dentro .about-frame ora sono tutti figli in position
+   absolute, quindi senza una larghezza esplicita la card collassa a 0 sotto i
+   980px, dove .about-visual ha margin-inline:auto (shrink-to-fit). */
+.about-visual{ position:relative; width:100%; }
 .about-frame{
-  aspect-ratio:4/5; border-radius:var(--radius-lg);
+  width:100%; aspect-ratio:4/5; border-radius:var(--radius-lg);
   background:
     radial-gradient(100% 80% at 20% 15%, rgba(255,255,255,.5), transparent 55%),
     linear-gradient(155deg, var(--sabbia), var(--crema-scuro) 50%, var(--rosa-pallido));
   border:1px solid rgba(255,255,255,.8);
   box-shadow:0 30px 70px -28px rgba(56,42,48,.25);
-  display:flex; align-items:center; justify-content:center;
   overflow:hidden; position:relative;
 }
-.about-frame .frame-logo{
-  width:78%; margin-top:-14%;
-  filter:drop-shadow(0 6px 20px rgba(160,94,108,.25));
+.about-frame .frame-photo{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+}
+/* Velo scuro in basso: la citazione bianca deve restare leggibile sulla foto. */
+.about-frame::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(transparent 45%, rgba(56,42,48,.58));
 }
 .about-frame .quote{
-  position:absolute; inset:auto 10% 10%;
+  position:absolute; z-index:2; inset:auto 10% 10%;
   font-family:var(--font-display); font-style:italic; font-size:clamp(16px,1.5vw,20px);
-  color:var(--prugna); text-align:center; line-height:1.45;
+  color:#fff; text-align:center; line-height:1.45;
+  text-shadow:0 2px 16px rgba(56,42,48,.45);
 }
 .about-badge{
   position:absolute; top:-26px; right:-18px;
