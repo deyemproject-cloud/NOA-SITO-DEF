@@ -43,7 +43,10 @@ body{
 
 ::selection{ background:var(--rosa); color:var(--bianco); }
 
-img,svg{ display:block; max-width:100%; }
+/* height:auto annulla l'attributo height="" dell'HTML: senza, le img con solo
+   width in CSS (.footer-logo, .frame-logo) vengono stirate in verticale. */
+img{ display:block; max-width:100%; height:auto; }
+svg{ display:block; max-width:100%; }
 a{ color:inherit; text-decoration:none; }
 button{ font:inherit; cursor:pointer; border:none; background:none; }
 
@@ -350,19 +353,16 @@ body::after{
   0%, 60% { transform:translateX(-65%) }
   100%    { transform:translateX(65%) }
 }
-.arch svg.botanic{
-  position:absolute; inset:8% 10%; width:80%; height:auto; margin:auto;
-  stroke:rgba(255,253,251,.85); fill:none; stroke-width:1.6;
-  stroke-linecap:round; stroke-linejoin:round;
+/* La foto riempie l'arco; il gradiente sotto resta come sfondo mentre carica.
+   Il velo rosa tiene la foto dentro la palette del brand. */
+.arch img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
 }
-.arch svg.botanic path{
-  stroke-dasharray:600; stroke-dashoffset:600;
-  animation:draw 3.4s 1s var(--ease-soft) forwards;
+.arch::before{
+  content:""; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(165deg, rgba(246,214,218,.28), rgba(201,142,155,.18));
+  mix-blend-mode:multiply;
 }
-.arch svg.botanic path:nth-child(2){ animation-delay:1.5s; }
-.arch svg.botanic path:nth-child(3){ animation-delay:2s; }
-.arch svg.botanic path:nth-child(4){ animation-delay:2.4s; }
-@keyframes draw{ to{ stroke-dashoffset:0; } }
 
 .float-card{
   position:absolute; z-index:3;
@@ -430,6 +430,11 @@ body::after{
 /* ============================================================
    MARQUEE
    ============================================================ */
+/* Il nastro è ruotato e scalato: i suoi angoli sborderebbero a destra e
+   allargherebbero il documento (scroll orizzontale). Il wrapper taglia solo
+   l'asse X — `clip` invece di `hidden` così l'inclinazione resta visibile
+   sopra e sotto e non si crea un contesto di scroll. */
+.marquee-clip{ overflow-x:clip; overflow-y:visible; }
 .marquee{
   background:var(--prugna); color:var(--crema);
   padding:20px 0; overflow:hidden;
@@ -612,13 +617,12 @@ section{ padding:110px 0; position:relative; }
 .g-item:nth-child(5){
   background:linear-gradient(160deg, #FBEFF1, var(--rosa)); }
 
-.g-item .sigil{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-58%);
-  width:42%; max-width:150px; opacity:.5;
-  stroke:#fff; fill:none; stroke-width:1.4; stroke-linecap:round;
-  transition:transform .6s var(--ease-out), opacity .4s;
+/* Le foto riempiono la tile; i gradienti sopra restano come sfondo di carico. */
+.g-item img{
+  position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+  transition:transform .7s var(--ease-out);
 }
-.g-item:hover .sigil{ transform:translate(-50%,-58%) scale(1.12) rotate(4deg); opacity:.85; }
+.g-item:hover img{ transform:scale(1.06); }
 
 .g-item figcaption{ position:relative; z-index:2; color:#fff; }
 .g-item figcaption b{
@@ -628,9 +632,10 @@ section{ padding:110px 0; position:relative; }
 .g-item figcaption span{
   font-size:11px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; opacity:.85;
 }
+/* Velo scuro in basso: tiene leggibili le didascalie bianche sopra le foto. */
 .g-item::after{
   content:""; position:absolute; inset:0;
-  background:linear-gradient(transparent 50%, rgba(56,42,48,.32));
+  background:linear-gradient(transparent 38%, rgba(56,42,48,.62));
 }
 
 @media (max-width: 880px){
@@ -1121,10 +1126,9 @@ a.service.featured .arrow{ color:var(--rosa); }
 
   /* animazioni decorative continue: spente */
   .blob, .petal, .rotor svg, .arch::after, .marquee-track,
-  .fc-1, .fc-2, .hero-tag .dot, .scroll-hint::after,
-  .arch svg.botanic path{ animation:none !important; }
+  .fc-1, .fc-2, .hero-tag .dot, .scroll-hint::after{ animation:none !important; }
   .petal{ display:none; }
-  .arch svg.botanic path{ stroke-dashoffset:0; }
+  .g-item:hover img{ transform:none; }
 
   /* contenuti dell'hero: subito visibili, senza slide */
   .hero h1 .line > span{ animation:none; transform:none; }
