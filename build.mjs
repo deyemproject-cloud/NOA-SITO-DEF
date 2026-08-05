@@ -36,9 +36,8 @@ const BIZ = {
   instagram: 'https://www.instagram.com/noa.pavia/',
   // Recensioni Treatwell, già visibili in home (requisito per aggregateRating)
   rating: { value: '4.9', count: '32' },
-  // TODO Andrea: prendere lat/lng esatte da Google Maps (pin del GBP) e
-  // incollarle qui — finché sono null il blocco `geo` viene omesso.
-  geo: null,
+  // Pin del profilo Google Maps (maps.app.goo.gl/kqCbz2W3AeWZCFyZA), 2026-08-05.
+  geo: ['45.180416', '9.1830979'],
 };
 
 /* Comuni serviti — usati in areaServed e nel footer */
