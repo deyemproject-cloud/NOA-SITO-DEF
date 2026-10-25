@@ -59,6 +59,34 @@
   </div>
 </footer>
 
+<div class="consenso" id="consenso" role="dialog" aria-label="Cookie di Google Ads">
+  Usiamo un cookie di Google Ads solo per capire quante persone ci contattano dagli annunci. Nessun altro tracciamento.
+  <div class="azioni"><button class="si" type="button" data-scelta="si">Accetto</button><button type="button" data-scelta="no">No, grazie</button></div>
+</div>
+<script>
+(function () {
+  // ogni tocco su WhatsApp o Chiama conta come contatto in Google Ads
+  document.querySelectorAll('a[href^="tel:"], a[href*="wa.me/"]').forEach(function (a) {
+    var tipo = a.getAttribute('href').indexOf('tel:') === 0 ? 'tel' : 'wa';
+    a.addEventListener('click', function () {
+      try { gtag('event', 'conversion', {send_to: CONV[tipo]}); } catch (e) {}
+    });
+  });
+  // banner del consenso, una volta sola
+  var box = document.getElementById('consenso'), scelta = null;
+  try { scelta = localStorage.getItem('noa_consenso'); } catch (e) {}
+  if (!scelta && box) box.style.display = 'block';
+  if (box) box.querySelectorAll('button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-scelta');
+      try { localStorage.setItem('noa_consenso', v); } catch (e) {}
+      if (v === 'si') gtag('consent', 'update', {ad_storage: 'granted', ad_user_data: 'granted'});
+      box.style.display = 'none';
+    });
+  });
+})();
+</script>
+
 <!-- Barra contatto fissa su telefono -->
 <div class="callbar" role="navigation" aria-label="Contatta NOA">
   <a class="cb-call" href="tel:+393475664504" data-umami-event="tocco-chiama">Chiama</a>

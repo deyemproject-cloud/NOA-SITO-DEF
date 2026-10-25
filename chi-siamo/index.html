@@ -34,6 +34,19 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..700;1,9..144,300..700&family=Karla:ital,wght@0,300..700;1,300..700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
+<!-- Google Ads: conteggio dei tocchi su WhatsApp e Chiama. Consenso negato di default: nessun cookie finche' la visitatrice non accetta. -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {ad_storage: 'denied', analytics_storage: 'denied', ad_user_data: 'denied', ad_personalization: 'denied'});
+try { if (localStorage.getItem('noa_consenso') === 'si') gtag('consent', 'update', {ad_storage: 'granted', ad_user_data: 'granted'}); } catch (e) {}
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17941088527"></script>
+<script>
+gtag('js', new Date());
+gtag('config', 'AW-17941088527');
+var CONV = {wa: 'AW-17941088527/qGgxCIrRhJQdEI-S_epC', tel: 'AW-17941088527/4PhRCI3RhJQdEI-S_epC'};
+</script>
 <!-- Umami Cloud: niente cookie, niente banner. -->
 <script defer src="https://cloud.umami.is/script.js" data-website-id="b78975b6-9be3-444b-a92d-a0d5e995b12f"></script>
 
@@ -517,6 +530,34 @@
     <p class="copy">© 2026 NOA Beauty &amp; Wellness — Via San Pietro in Verzolo 15, Pavia · Realizzato con <em>amore</em></p>
   </div>
 </footer>
+
+<div class="consenso" id="consenso" role="dialog" aria-label="Cookie di Google Ads">
+  Usiamo un cookie di Google Ads solo per capire quante persone ci contattano dagli annunci. Nessun altro tracciamento.
+  <div class="azioni"><button class="si" type="button" data-scelta="si">Accetto</button><button type="button" data-scelta="no">No, grazie</button></div>
+</div>
+<script>
+(function () {
+  // ogni tocco su WhatsApp o Chiama conta come contatto in Google Ads
+  document.querySelectorAll('a[href^="tel:"], a[href*="wa.me/"]').forEach(function (a) {
+    var tipo = a.getAttribute('href').indexOf('tel:') === 0 ? 'tel' : 'wa';
+    a.addEventListener('click', function () {
+      try { gtag('event', 'conversion', {send_to: CONV[tipo]}); } catch (e) {}
+    });
+  });
+  // banner del consenso, una volta sola
+  var box = document.getElementById('consenso'), scelta = null;
+  try { scelta = localStorage.getItem('noa_consenso'); } catch (e) {}
+  if (!scelta && box) box.style.display = 'block';
+  if (box) box.querySelectorAll('button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var v = b.getAttribute('data-scelta');
+      try { localStorage.setItem('noa_consenso', v); } catch (e) {}
+      if (v === 'si') gtag('consent', 'update', {ad_storage: 'granted', ad_user_data: 'granted'});
+      box.style.display = 'none';
+    });
+  });
+})();
+</script>
 
 <!-- Barra contatto fissa su telefono -->
 <div class="callbar" role="navigation" aria-label="Contatta NOA">
