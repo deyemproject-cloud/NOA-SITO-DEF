@@ -1,53 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://www.noapavia.it/chi-siamo/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.8</priority>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/antonio-puccio.webp</image:loc><image:title>Antonio Puccio, direttore tecnico di NOA Beauty &amp; Wellness a Pavia</image:title></image:image>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/vitalia.webp</image:loc><image:title>Vitalia, estetista di NOA Beauty &amp; Wellness a Pavia</image:title></image:image>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/squadra-noa-ingresso.webp</image:loc><image:title>Antonio e Vitalia davanti all'ingresso di NOA Beauty &amp; Wellness, Via San Pietro in Verzolo 15, Pavia</image:title></image:image>
+  </url>
+  <url>
+    <loc>https://www.noapavia.it/domande-frequenti/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.noapavia.it/dove-siamo/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.8</priority>
+  </url>
   <url>
     <loc>https://www.noapavia.it/epilazione-pavia/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.noapavia.it/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>1.0</priority>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/hero-massaggio.webp</image:loc><image:title>Massaggio corpo con olio caldo nel centro estetico NOA a Pavia</image:title></image:image>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/chi-siamo.webp</image:loc><image:title>Angolo relax del centro estetico NOA a Pavia: poltrona in bouclé, eucalipto e candela accesa</image:title></image:image>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/sala-massaggi.webp</image:loc><image:title>Lettino da massaggio con lino color crema e olio essenziale — NOA, centro estetico a Pavia</image:title></image:image>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/area-viso.webp</image:loc><image:title>Siero, crema e dischetti di cotone per un trattamento viso — NOA Pavia</image:title></image:image>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/sauna.webp</image:loc><image:title>Interno della sauna con secchio, mestolo e pietre calde — NOA Pavia</image:title></image:image>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/nail-corner.webp</image:loc><image:title>Mani con manicure semipermanente nude rosato — NOA Pavia</image:title></image:image>
+    <image:image><image:loc>https://www.noapavia.it/assets/foto/beauty-studio.webp</image:loc><image:title>Postazione per sopracciglia e sguardo con pinzetta e pennello — NOA Pavia</image:title></image:image>
   </url>
   <url>
     <loc>https://www.noapavia.it/listino.html</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.noapavia.it/luce-pulsata-pavia/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.noapavia.it/maderoterapia-pavia/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.noapavia.it/manicure-pedicure-pavia/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.noapavia.it/massaggi-pavia/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.noapavia.it/massaggio-gravidanza-pavia/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://www.noapavia.it/sauna-pavia/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.noapavia.it/trattamenti-corpo-pavia/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.noapavia.it/trattamenti-viso-pavia/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <lastmod>2026-10-25</lastmod>
     <priority>0.8</priority>
   </url>
 </urlset>

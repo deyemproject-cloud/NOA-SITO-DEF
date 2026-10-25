@@ -38,7 +38,36 @@ const BIZ = {
   rating: { value: '4.9', count: '32' },
   // Pin del profilo Google Maps (maps.app.goo.gl/kqCbz2W3AeWZCFyZA), 2026-08-05.
   geo: ['45.180416', '9.1830979'],
+  foundingDate: '2026-03-23',
+  maps: 'https://maps.app.goo.gl/kqCbz2W3AeWZCFyZA',
 };
+
+/* Persone: unica fonte per pagina "Chi siamo" e dati strutturati.
+   Solo dati pubblici già presenti sul sito e sul profilo Instagram. */
+const PEOPLE = [
+  {
+    id: 'antonio-puccio', name: 'Antonio Puccio',
+    jobTitle: 'Direttore tecnico · operatore olistico del benessere',
+    description: "Laureato in Scienze Motorie, responsabile dell'area massaggi di NOA e specializzato nel massaggio in gravidanza. Porta a Pavia l'esperienza maturata a Milano nei trattamenti manuali personalizzati.",
+    knowsAbout: ['Massaggio in gravidanza', 'Massaggio decontratturante', 'Massaggio terapeutico', 'Massaggio sportivo', 'Linfodrenaggio metodo Vodder',
+      'Riflessologia plantare', 'Massaggio in gravidanza', 'Maderoterapia', 'Trattamenti anticellulite'],
+    credential: 'Laurea in Scienze Motorie',
+    image: '/assets/foto/antonio-puccio.webp',
+  },
+  {
+    id: 'vitalia', name: 'Vitalia',
+    jobTitle: 'Estetista · trattamenti viso e corpo',
+    description: 'Estetista di NOA: massaggi estetici rimodellanti, trattamenti viso e corpo, maderoterapia.',
+    knowsAbout: ['Trattamenti viso', 'Trattamenti corpo', 'Maderoterapia', 'Massaggio anticellulite', 'Pressoterapia'],
+    image: '/assets/foto/vitalia.webp',
+  },
+];
+const personNode = pp => ({
+  '@type': 'Person', '@id': `${SITE}/chi-siamo/#${pp.id}`, name: pp.name, jobTitle: pp.jobTitle,
+  description: pp.description, knowsAbout: pp.knowsAbout, image: `${SITE}${pp.image}`,
+  worksFor: { '@id': BIZ_ID },
+  ...(pp.credential ? { hasCredential: { '@type': 'EducationalOccupationalCredential', credentialCategory: 'degree', name: pp.credential } } : {}),
+});
 
 /* Comuni serviti — usati in areaServed e nel footer */
 const COMUNI = [
@@ -89,7 +118,11 @@ function localBusiness(catalog) {
       opens: o.open,
       closes: o.close,
     })),
-    sameAs: [BIZ.instagram],
+    sameAs: [BIZ.instagram, BIZ.maps],
+    hasMap: BIZ.maps,
+    foundingDate: BIZ.foundingDate,
+    employee: PEOPLE.map(pp => ({ '@id': `${SITE}/chi-siamo/#${pp.id}` })),
+    founder: { '@id': `${SITE}/chi-siamo/#antonio-puccio` },
     areaServed: COMUNI.map(c => ({ '@type': 'City', name: c })),
     knowsLanguage: ['it', 'en'],
     aggregateRating: {
@@ -277,6 +310,18 @@ function readSrc(file) {
   return { meta, body: raw.slice(m[0].length) };
 }
 
+/* Hub "Domande frequenti": raccoglie le FAQ di tutte le pagine (unica fonte: i META). */
+function allFaqs() {
+  return readdirSync(join(ROOT, 'src')).filter(f => f.endsWith('.html')).sort()
+    .map(f => readSrc(f).meta).filter(m => m.faq && !m.faqHub)
+    .map(m => ({ url: m.url, title: m.title.replace(/\s*\|.*$/, ''), faq: m.faq }));
+}
+function renderFaqHub() {
+  return allFaqs().map(g =>
+    `    <div class="menu-head reveal"><span class="orn">✿ ✿ ✿</span><h2><a href="${g.url}">${g.title}</a></h2></div>\n` +
+    renderFaq(g.faq)).join('\n');
+}
+
 function buildPage(file) {
   const { meta, body: rawBody } = readSrc(file);
   const url = meta.url;                       // es. "/", "/massaggi-pavia/"
@@ -287,6 +332,11 @@ function buildPage(file) {
   if (meta.menu) body = body.replace('{{MENU}}', renderMenu(meta.menu));
   if (meta.faq) body = body.replace('{{FAQ}}', renderFaq(meta.faq));
   if (meta.breadcrumb) body = body.replace('{{CRUMBS}}', renderCrumbs(meta.breadcrumb));
+  if (body.includes('{{EVENTI}}')) {
+    const live = (meta.events || []).filter(e => e.until >= TODAY);
+    body = body.replace('{{EVENTI}}', live.map(e => e.html).join('\n'));
+  }
+  if (body.includes('{{FAQ_TUTTE}}')) body = body.replace('{{FAQ_TUTTE}}', renderFaqHub());
 
   /* --- JSON-LD --- */
   const graph = [];
@@ -322,8 +372,34 @@ function buildPage(file) {
     graph.push(svc);
   }
 
+  graph.push({
+    '@type': meta.pageType || 'WebPage',
+    '@id': `${canonical}#webpage`,
+    url: canonical,
+    name: meta.title,
+    description: meta.description,
+    inLanguage: 'it-IT',
+    isPartOf: { '@id': `${SITE}/#website` },
+    about: { '@id': BIZ_ID },
+    primaryImageOfPage: { '@type': 'ImageObject', url: `${SITE}${meta.image || '/assets/og-image.jpg'}` },
+    speakable: { '@type': 'SpeakableSpecification', cssSelector: ['h1', '.lead', '.svc-prose p:first-of-type'] },
+  });
+  if (meta.schema !== 'home') graph.push({ '@type': 'WebSite', '@id': `${SITE}/#website`, url: `${SITE}/`, name: BIZ.name, inLanguage: 'it-IT', publisher: { '@id': BIZ_ID } });
+  if (meta.people) PEOPLE.forEach(pp => graph.push(personNode(pp)));
+  for (const ev of (meta.events || [])) {
+    if (ev.until < TODAY) continue;
+    graph.push({
+      '@type': 'Event', name: ev.name, description: ev.description, startDate: ev.start, endDate: ev.start,
+      eventStatus: 'https://schema.org/EventScheduled', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      isAccessibleForFree: true, inLanguage: 'it-IT',
+      location: { '@type': 'Place', name: BIZ.name, address: postalAddress() },
+      organizer: { '@id': BIZ_ID }, image: `${SITE}${ev.image || '/assets/og-image.jpg'}`,
+      offers: { '@type': 'Offer', url: canonical, price: '0', priceCurrency: 'EUR', availability: 'https://schema.org/LimitedAvailability' },
+    });
+  }
   if (meta.breadcrumb && meta.breadcrumb.length > 1) graph.push(breadcrumbs(meta.breadcrumb));
   if (meta.faq) graph.push(faqSchema(meta.faq));
+  if (meta.faqHub) graph.push(faqSchema(allFaqs().flatMap(g => g.faq)));
 
   const jsonld =
     `<script type="application/ld+json">\n` +
@@ -359,25 +435,105 @@ function buildPage(file) {
       : join(ROOT, url.slice(1));
   mkdirSync(dirname(out), { recursive: true });
   writeFileSync(out, html);
-  return { url, out, priority: meta.priority ?? '0.7', noindex: !!meta.noindex };
+  return { url, out, meta, priority: meta.priority ?? '0.7', noindex: !!meta.noindex };
 }
 
 /* ---------- Esecuzione ---------- */
 const files = readdirSync(join(ROOT, 'src')).filter(f => f.endsWith('.html')).sort();
 const pages = files.map(buildPage);
 
+/* ============================================================
+   Livello "indicizzazione": sitemap con immagini e lastmod onesto,
+   robots.txt, llms.txt e llms-full.txt (per i motori di risposta IA).
+   Tutto generato dagli stessi dati delle pagine: niente da tenere
+   allineato a mano.
+   ============================================================ */
+import { existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+
+/* lastmod onesto: cambia solo se cambia l'HTML finale della pagina */
+const LM_FILE = join(ROOT, '.lastmod.json');
+const lm = existsSync(LM_FILE) ? JSON.parse(readFileSync(LM_FILE, 'utf8')) : {};
+for (const p of pages) {
+  const html = readFileSync(p.out, 'utf8');
+  const h = createHash('sha1').update(html).digest('hex');
+  if (!lm[p.url] || lm[p.url].h !== h) lm[p.url] = { h, d: TODAY };
+  p.lastmod = lm[p.url].d;
+  p.html = html;
+}
+writeFileSync(LM_FILE, JSON.stringify(lm, null, 1));
+
+const imagesOf = html => {
+  const seen = new Set(), out = [];
+  for (const m of html.matchAll(/<img[^>]+src="(\/assets\/foto\/[^"]+)"[^>]*alt="([^"]*)"/g)) {
+    if (seen.has(m[1])) continue;
+    seen.add(m[1]); out.push({ src: m[1], alt: m[2] });
+  }
+  return out;
+};
+
 const sitemap =
   `<?xml version="1.0" encoding="UTF-8"?>\n` +
-  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+  `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n` +
   pages
     .filter(p => !p.noindex)
     .map(p =>
       `  <url>\n    <loc>${SITE}${p.url}</loc>\n` +
-      `    <lastmod>${TODAY}</lastmod>\n` +
-      `    <priority>${p.priority}</priority>\n  </url>\n`)
+      `    <lastmod>${p.lastmod}</lastmod>\n` +
+      `    <priority>${p.priority}</priority>\n` +
+      imagesOf(p.html).map(i =>
+        `    <image:image><image:loc>${SITE}${i.src}</image:loc><image:title>${esc(i.alt)}</image:title></image:image>\n`).join('') +
+      `  </url>\n`)
     .join('') +
   `</urlset>\n`;
 writeFileSync(join(ROOT, 'sitemap.xml'), sitemap);
 
-console.log(`✓ ${pages.length} pagine + sitemap.xml`);
+/* robots.txt: tutti i crawler ammessi, i bot IA nominati esplicitamente */
+const AI_BOTS = ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User', 'ClaudeBot', 'Claude-User', 'Claude-SearchBot',
+  'PerplexityBot', 'Perplexity-User', 'Google-Extended', 'Applebot-Extended', 'Bingbot', 'DuckAssistBot',
+  'Amazonbot', 'meta-externalagent', 'CCBot'];
+writeFileSync(join(ROOT, 'robots.txt'),
+  `User-agent: *\nAllow: /\n\n` +
+  AI_BOTS.map(b => `User-agent: ${b}\nAllow: /\n`).join('\n') +
+  `\nSitemap: ${SITE}/sitemap.xml\n`);
+
+/* testo pulito di una pagina, in markdown, per llms-full.txt */
+function pageToMarkdown(html) {
+  let m = html.match(/<main[\s\S]*?<\/main>/i);
+  let t = m ? m[0] : html.replace(/[\s\S]*<body[^>]*>/i, '');
+  const hero = html.match(/<header class="listino-hero">[\s\S]*?<\/header>/i);
+  if (hero && !m?.[0].includes('listino-hero')) t = hero[0] + t;
+  t = t.replace(/<(script|style|svg|noscript)[\s\S]*?<\/\1>/gi, '')
+       .replace(/<h1[^>]*>([\s\S]*?)<\/h1>/gi, '\n# $1\n')
+       .replace(/<h2[^>]*>([\s\S]*?)<\/h2>/gi, '\n## $1\n')
+       .replace(/<h3[^>]*>([\s\S]*?)<\/h3>/gi, '\n### $1\n')
+       .replace(/<li[^>]*>/gi, '\n- ')
+       .replace(/<\/(p|div|section|dt|dd|tr|details|summary)>/gi, '\n')
+       .replace(/<br\s*\/?>/gi, '\n')
+       .replace(/<[^>]+>/g, ' ')
+       .replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#39;|&apos;/g, "'").replace(/&nbsp;/g, ' ')
+       .replace(/[ \t]+/g, ' ').replace(/ ?\n ?/g, '\n').replace(/\n{3,}/g, '\n\n');
+  return t.trim();
+}
+
+const indexable = pages.filter(p => !p.noindex && p.url !== '/404.html');
+const orariTxt = 'Lunedì–venerdì 9:00–19:00, sabato 9:00–12:30, domenica chiuso';
+const headLlms =
+  `# ${BIZ.name}\n\n` +
+  `> Centro estetico e benessere a ${BIZ.city} (${BIZ.region}): massaggi, maderoterapia, epilazione a cera e luce pulsata, ` +
+  `trattamenti viso e corpo, manicure e pedicure, sauna. Specializzato nel massaggio in gravidanza con lettino dotato di apertura per il pancione. ` +
+  `Indirizzo: ${BIZ.street}, ${BIZ.postal} ${BIZ.city}. Telefono e WhatsApp: ${BIZ.phone}. Orari: ${orariTxt}. ` +
+  `Si prenota su WhatsApp. Sito ufficiale: ${SITE}/\n\n`;
+const titleOf = p => (p.meta?.title || p.url).replace(/\s*\|.*$/, '');
+writeFileSync(join(ROOT, 'llms.txt'),
+  headLlms +
+  `## Pagine principali\n\n` +
+  indexable.map(p => `- [${titleOf(p)}](${SITE}${p.url}): ${p.meta?.description || ''}`).join('\n') +
+  `\n\n## Dati dell'attività\n\n- Nome: ${BIZ.name}\n- Indirizzo: ${BIZ.street}, ${BIZ.postal} ${BIZ.city} (${BIZ.region})\n` +
+  `- Telefono / WhatsApp: ${BIZ.phone}\n- Orari: ${orariTxt}\n- Instagram: ${BIZ.instagram}\n` +
+  `- Comuni serviti: ${COMUNI.join(', ')}\n\n## Testo completo\n\n- [Tutte le pagine in un solo file](${SITE}/llms-full.txt)\n`);
+writeFileSync(join(ROOT, 'llms-full.txt'),
+  headLlms + indexable.map(p => `\n\n---\n\nFonte: ${SITE}${p.url}\nAggiornata: ${p.lastmod}\n\n${pageToMarkdown(p.html)}`).join('') + '\n');
+
+console.log(`✓ ${pages.length} pagine + sitemap.xml, robots.txt, llms.txt, llms-full.txt`);
 for (const p of pages) console.log(`  ${p.url.padEnd(28)} → ${p.out.replace(ROOT + '\\', '').replace(ROOT + '/', '')}`);
