@@ -314,7 +314,12 @@ function readSrc(file) {
 function allFaqs() {
   return readdirSync(join(ROOT, 'src')).filter(f => f.endsWith('.html')).sort()
     .map(f => readSrc(f).meta).filter(m => m.faq && !m.faqHub)
-    .map(m => ({ url: m.url, title: m.title.replace(/\s*\|.*$/, ''), faq: m.faq }));
+    .map(m => ({ url: m.url, title: m.url === '/' ? 'Il centro e i trattamenti' : m.title.replace(/\s*\|.*$/, ''), faq: m.faq }))
+    .sort((a, b) => {
+      const ORD = ['/', '/massaggi-pavia/', '/massaggio-gravidanza-pavia/'];
+      const r = u => (ORD.indexOf(u) === -1 ? ORD.length : ORD.indexOf(u));
+      return r(a.url) - r(b.url);
+    });
 }
 function renderFaqHub() {
   return allFaqs().map(g =>
