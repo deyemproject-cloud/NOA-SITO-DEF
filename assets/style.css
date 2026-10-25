@@ -1151,3 +1151,13 @@ a.service.featured .arrow{ color:var(--rosa); }
   .island, .brand img, .btn, .service, .stat, .review, .info-row,
   .g-item, .mobile-menu, .island nav .sub, .faq-item summary::after{ transition:none; }
 }
+
+/* Barra contatto fissa (solo telefono): Chiama + WhatsApp */
+.callbar{display:none}
+@media (max-width:820px){
+  .callbar{display:flex;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 14px calc(10px + env(safe-area-inset-bottom));background:rgba(251,246,241,.96);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 -6px 22px rgba(60,40,40,.14)}
+  .callbar a{flex:1;text-align:center;padding:14px 10px;border-radius:999px;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none}
+  .callbar .cb-call{background:#3A2B30;color:#fff}
+  .callbar .cb-wa{background:var(--rosa-oro);color:#fff}
+  body{padding-bottom:78px}
+}
