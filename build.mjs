@@ -106,7 +106,7 @@ function localBusiness(catalog) {
     image: `${SITE}/assets/og-image.jpg`,
     description:
       'Centro estetico e benessere a Pavia: massaggi professionali, epilazione a cera e ' +
-      'luce pulsata, trattamenti viso e corpo ad alta efficacia, nail spa e sauna.',
+      'laser a diodo, trattamenti viso e corpo ad alta efficacia, nail spa e sauna.',
     telephone: BIZ.phoneRaw,
     priceRange: '€€',
     currenciesAccepted: 'EUR',
@@ -525,7 +525,7 @@ const indexable = pages.filter(p => !p.noindex && p.url !== '/404.html');
 const orariTxt = 'Lunedì–venerdì 9:00–19:00, sabato 9:00–12:30, domenica chiuso';
 const headLlms =
   `# ${BIZ.name}\n\n` +
-  `> Centro estetico e benessere a ${BIZ.city} (${BIZ.region}): massaggi, maderoterapia, epilazione a cera e luce pulsata, ` +
+  `> Centro estetico e benessere a ${BIZ.city} (${BIZ.region}): massaggi, maderoterapia, epilazione a cera e laser, ` +
   `trattamenti viso e corpo, manicure e pedicure, sauna. Specializzato nel massaggio in gravidanza con lettino dotato di apertura per il pancione. ` +
   `Indirizzo: ${BIZ.street}, ${BIZ.postal} ${BIZ.city}. Telefono e WhatsApp: ${BIZ.phone}. Orari: ${orariTxt}. ` +
   `Si prenota su WhatsApp. Sito ufficiale: ${SITE}/\n\n`;

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://www.noapavia.it/chi-siamo/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <priority>0.8</priority>
     <image:image><image:loc>https://www.noapavia.it/assets/foto/antonio-puccio.webp</image:loc><image:title>Antonio Puccio, direttore tecnico di NOA Beauty &amp; Wellness a Pavia</image:title></image:image>
     <image:image><image:loc>https://www.noapavia.it/assets/foto/vitalia.webp</image:loc><image:title>Vitalia, estetista di NOA Beauty &amp; Wellness a Pavia</image:title></image:image>
@@ -19,8 +19,13 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.noapavia.it/epilazione-laser-pavia/</loc>
+    <lastmod>2026-10-28</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.noapavia.it/epilazione-pavia/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -37,17 +42,12 @@
   </url>
   <url>
     <loc>https://www.noapavia.it/listino.html</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://www.noapavia.it/luce-pulsata-pavia/</loc>
-    <lastmod>2026-10-25</lastmod>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://www.noapavia.it/maderoterapia-pavia/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
@@ -74,7 +74,7 @@
   </url>
   <url>
     <loc>https://www.noapavia.it/trattamenti-corpo-pavia/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-28</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
