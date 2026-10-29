@@ -1249,11 +1249,6 @@ Manicure & pedicure
 Sauna & spa
 
 Listino
-
-Listino completo
-Listino massaggi
-Trattamenti estetici
-
 Recensioni
 Dove siamo
 
@@ -1272,11 +1267,7 @@ Trattamenti corpo
 Manicure & pedicure
 Sauna & spa
 
-Listino prezzi
-Listino completo
-Listino massaggi
-Trattamenti estetici
-
+Listino Prezzi
 Recensioni
 Dove siamo
 Prenota Ora
@@ -1659,8 +1650,6 @@ Sant'Alessio con Vialone, Belgioioso, Torre d'Isola.
 Chi Siamo
 Rituali
 Listino Prezzi
-Listino massaggi
-Listino trattamenti estetici
 Dove siamo
 Domande frequenti
 
