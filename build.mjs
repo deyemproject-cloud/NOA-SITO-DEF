@@ -423,8 +423,17 @@ function buildPage(file) {
     .replace('{{EXTRA_HEAD}}', meta.extraHead || '')
     .replace('{{JSONLD}}', jsonld);
 
-  const header = markActive(HEADER, meta.nav || []);
-  const footer = markActive(FOOTER, []);
+  let header = markActive(HEADER, meta.nav || []);
+  let footer = markActive(FOOTER, []);
+  if (meta.landing) {
+    /* Landing per annunci: nessun menu che porti via la visitatrice; restano barra Chiama/WhatsApp, consenso e conteggio. */
+    header = `<div class="island-wrap"><header class="island" id="island">
+    <a class="brand" href="/massaggio-gravidanza-pavia/" aria-label="NOA Beauty &amp; Wellness"><img src="/assets/logo-oro.png" alt="NOA Beauty &amp; Wellness" width="1600" height="1080"></a>
+    <a class="btn-prenota" href="https://wa.me/393475664504?text=Ciao%20NOA!%20Vorrei%20prenotare%20un%20massaggio%20in%20gravidanza" target="_blank" rel="noopener">Prenota</a>
+  </header></div>`;
+    const tail = footer.slice(footer.indexOf('<div class="consenso"'));
+    footer = `<footer class="site"><div class="container"><p class="fnap" style="text-align:center"><strong>NOA Beauty &amp; Wellness</strong> · Via San Pietro in Verzolo 15, 27100 Pavia · <a href="tel:+393475664504">347 566 4504</a><br>Lun–Ven 9:00–19:00 · Sabato 9:00–12:30</p></div></footer>\n` + tail;
+  }
 
   const html =
     `<!DOCTYPE html>\n<html lang="it">\n<head>\n${head}\n</head>\n<body>\n\n` +

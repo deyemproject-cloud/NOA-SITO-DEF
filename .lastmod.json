@@ -1,66 +1,78 @@
 {
  "/404.html": {
-  "h": "d0cfbabb3a5b676c617b7c435e79441675b6f605",
-  "d": "2026-10-28"
+  "h": "54045cdf33618f8488a70b9d7615760d19aaf06a",
+  "d": "2026-10-29"
  },
  "/epilazione-pavia/": {
-  "h": "77242131b4e53e7e47cb05627ba322b225bee6c9",
-  "d": "2026-10-28"
+  "h": "2001e9cdebb8606a2cec90ff030330d79626a081",
+  "d": "2026-10-29"
  },
  "/": {
-  "h": "04b1654dd8ff1f6bcdc2ae7b6430c307c7047193",
-  "d": "2026-10-28"
+  "h": "a682d7e931349140e367a699c30cee1652c9bd77",
+  "d": "2026-10-29"
  },
  "/listino.html": {
-  "h": "c40f79ea90d0cb2821f6e682cda5bfeb88cc410e",
-  "d": "2026-10-28"
+  "h": "f27466c025e6b1ff4b2844fec8d66b767782ec87",
+  "d": "2026-10-29"
  },
  "/luce-pulsata-pavia/": {
-  "h": "4cf60a295230f1639bbfb96372bec303a38ec430",
-  "d": "2026-10-28"
+  "h": "065502eb1556fcca1aeadb3c5933c3d472b0b8b1",
+  "d": "2026-10-29"
  },
  "/maderoterapia-pavia/": {
-  "h": "453968ff4a1c591ed7a7a974742db37ce6b81b05",
-  "d": "2026-10-28"
+  "h": "946186fc0240eb9a5fd462962faf0b8c72fd88a3",
+  "d": "2026-10-29"
  },
  "/manicure-pedicure-pavia/": {
-  "h": "322e896c4420099f6af6183c3715f911c231c75b",
-  "d": "2026-10-28"
+  "h": "aa3fe7e2269b8b9efb54c433e3e910b4efa85c05",
+  "d": "2026-10-29"
  },
  "/massaggi-pavia/": {
-  "h": "2306f00537d8f28fd5a675ecf34e815e6dc52c6c",
-  "d": "2026-10-28"
+  "h": "0e19e2a7ae2c12f0392df2131942897d6cafe2b6",
+  "d": "2026-10-29"
  },
  "/sauna-pavia/": {
-  "h": "bacafc5ce2ecb77c7692b969c8ba370f5fa266b4",
-  "d": "2026-10-28"
+  "h": "75c21640e1cff107c6300261712b9b4927ac5dc6",
+  "d": "2026-10-29"
  },
  "/trattamenti-corpo-pavia/": {
-  "h": "8ba055528e2a52301e1b62a2e47cb9c3e50ff02f",
-  "d": "2026-10-28"
+  "h": "bd5421425ce52eb68f92b16bf61081771ecf4f90",
+  "d": "2026-10-29"
  },
  "/trattamenti-viso-pavia/": {
-  "h": "8b52ba275add3370cdb09e6344e25152b92d8fed",
-  "d": "2026-10-28"
+  "h": "3448d99f1c3f7751af016afc7c991c5f8dfcb675",
+  "d": "2026-10-29"
  },
  "/chi-siamo/": {
-  "h": "4f35dd960c42c535cc166e87304fecef520370d0",
-  "d": "2026-10-28"
+  "h": "f8729ff68e015bcac82c9f8c742034864f15414e",
+  "d": "2026-10-29"
  },
  "/massaggio-gravidanza-pavia/": {
-  "h": "4546f26719c1ab2954dd4c77b321fe07759f9304",
-  "d": "2026-10-28"
+  "h": "3a8352893cef6f0d7fcd0c70916bcd21aea9ac87",
+  "d": "2026-10-29"
  },
  "/domande-frequenti/": {
-  "h": "c2081e29cd40fba3c7c784ff15472df60fc02a1a",
-  "d": "2026-10-28"
+  "h": "e7b6ea20333d5190a424af632f1efb6145082820",
+  "d": "2026-10-29"
  },
  "/dove-siamo/": {
-  "h": "cd4051a62a007133cd986109973c286e83723147",
-  "d": "2026-10-28"
+  "h": "42d496da678a9ed7c577ed540a25c5313c33db45",
+  "d": "2026-10-29"
  },
  "/epilazione-laser-pavia/": {
-  "h": "adf8272077edb2ee7717534f1962ae3e8900f844",
-  "d": "2026-10-28"
+  "h": "4d33de743ee60f6a722f7b452eea834d7e7c9b51",
+  "d": "2026-10-29"
+ },
+ "/listino-massaggi-pavia/": {
+  "h": "c1c73c9c0d7e1c435ca2fa288f19542035a98d2c",
+  "d": "2026-10-29"
+ },
+ "/listino-trattamenti-estetici-pavia/": {
+  "h": "f24faaa94bb0a960482b59d830ee680d294fda64",
+  "d": "2026-10-29"
+ },
+ "/prenota-massaggio-gravidanza-pavia/": {
+  "h": "1e0ca79159a88857711f926efb8571552485ac89",
+  "d": "2026-10-29"
  }
 }
